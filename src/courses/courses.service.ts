@@ -15,13 +15,13 @@ export class CoursesService {
   ) {}
 
   async findAll() {
-    return this.courseRepository.find({relations:['tags']});
+    return this.courseRepository.find({ relations: ['tags'] });
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const course = await this.courseRepository.findOne({
       where: { id },
-      relations: ['tags']
+      relations: ['tags'],
     });
     if (!course) {
       throw new HttpException(
@@ -42,7 +42,7 @@ export class CoursesService {
     return await this.courseRepository.save(course);
   }
 
-  async update(id: number, updateCourseDTO: any) {
+  async update(id: string, updateCourseDTO: any) {
     const tags =
       updateCourseDTO.tags &&
       (await Promise.all(
@@ -62,7 +62,7 @@ export class CoursesService {
     return await this.courseRepository.save(course);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const course = await this.courseRepository.findOne({
       where: { id },
     });
